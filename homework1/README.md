@@ -13,7 +13,7 @@
 ### Структура проекта
 
 
-```
+```css
 homework1/
 ├── config/
 │   ├── config.json  #конфигурационный файл
@@ -30,7 +30,7 @@ homework1/
 
 `def __init__(self, config)`
 
-```
+```Python
     def __init__(self, config):
         self.hostname = config["hostname"]
         self.vfs_path = config["vfs_path"]
@@ -46,7 +46,7 @@ homework1/
 
 `load_vfs(self, tar_path)`
 
-```
+```Python
 def load_vfs(self, tar_path):
     with tarfile.open(tar_path, "r") as tar:
         for member in tar.getmembers():
@@ -64,7 +64,7 @@ def load_vfs(self, tar_path):
 
 `ls(self)`
 
-```
+```Python
     def ls(self):
         files = []
         #путь + / если не корень, current_dir если корень
@@ -83,7 +83,7 @@ def load_vfs(self, tar_path):
 
 `change_dir(self, path)`
 
-```
+```Python
     def change_dir(self, path):
         if path.startswith("/"):  #абсолютный путь
             new_path = path
@@ -108,7 +108,7 @@ def load_vfs(self, tar_path):
 
 `exit_shell(self)`
 
-```
+```Python
     def exit_shell(self):
         return "exit"
 ```
@@ -117,7 +117,7 @@ def load_vfs(self, tar_path):
 
 
 `uptime(self)`
-```
+```Python
     def uptime(self):
         uptime_seconds = time.time() - self.start_time #время работы эмулятора
         current_time = time.strftime("%H:%M:%S", time.localtime()) #время сейчас
@@ -132,7 +132,7 @@ def load_vfs(self, tar_path):
 
 
 `touch(self, filename)`
-```
+```Python
     def touch(self, filename):
         #путь нового файла - текущая + / если не корень + имя
         new_file_path = self.current_dir + "/"*(self.current_dir!="/") + filename
@@ -149,7 +149,7 @@ def load_vfs(self, tar_path):
 
 
 `uniq(self, filename)`
-```
+```Python
     def uniq(self, filename):
         file_path = self.current_dir + "/"*(self.current_dir!="/") + filename
         #если есть файл такой и он не директория
@@ -167,7 +167,7 @@ def load_vfs(self, tar_path):
 
 `execute_command(self, command)`
 
-```
+```Python
 def execute_command(self, command):
     if command.startswith("ls"):
         return self.ls()
@@ -197,7 +197,7 @@ def execute_command(self, command):
 
 
 `__init__(self, root, emulator)`
-```
+```Python
     def __init__(self, root, emulator):
         self.emulator = emulator #shellemulator object
         self.root = root #root window
@@ -221,7 +221,7 @@ def execute_command(self, command):
 
 `show_prompt(message="")`
 
-```
+```Python
 def show_prompt(self, message=""):
     self.text_area.configure(state=tk.NORMAL)
     if message == "":
@@ -237,7 +237,7 @@ def show_prompt(self, message=""):
 
 `process_input(self, event=None)`
 
-```
+```Python
 def process_input(self, event=None):
     user_input = self.input_field.get()
     self.input_field.delete(0, tk.END)
@@ -261,12 +261,12 @@ def process_input(self, event=None):
 
 ### Клонирование репозитория и запуск проекта
 
-```
+```bash
 git clone https://github.com/nerlisse/conf_upr.git
 cd homework1
 python src/ShellEmulator.py
 ```
 
 ### Результат прогона тестов
-![img.png](img.png)
+![img.png](https://github.com/user-attachments/assets/5a8da7a6-ce1c-4cc0-aa11-7e6e0768ed01)
 
