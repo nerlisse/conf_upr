@@ -1,0 +1,3 @@
+visualizer_path: "/usr/local/bin/mmdc"
+package: "openssl"
+repo_url: "http://archive.ubuntu.com/ubuntu"
