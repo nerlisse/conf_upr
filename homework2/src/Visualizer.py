@@ -76,6 +76,7 @@ class DependencyVisualizer:
     #функция генерации изображения
     def visualize(self, output_path="graph.png"):
         mermaid_content = self.generate_mermaid_diagram()
+        #print(mermaid_content)
         #записываем во временный файл содержимое диаграммы
         temp_file = "temp.mmd"
         with open(temp_file, "w") as f:
@@ -84,7 +85,7 @@ class DependencyVisualizer:
         #вызов инструмента mmdc для генерации изображения
         try:
             subprocess.run(
-                [self.visualizer_path, "-i", temp_file, "-o", output_path],
+                [self.visualizer_path, "-i", temp_file, "-o", output_path, "--puppeteerConfigFile", "config/pconfig.json"],
                 check=True
             )
             print(f"graph generated at {output_path}")
@@ -94,12 +95,7 @@ class DependencyVisualizer:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("usage: python dependency_visualizer.py <config_path>")
-        sys.exit(1)
-
-    config_path = sys.argv[1] #путь к конфигу
-    #config_path = "config/config.yaml"
+    config_path = "config/config.yaml"
     visualizer = DependencyVisualizer(config_path)
     visualizer.build_dependency_graph()
     visualizer.visualize()
