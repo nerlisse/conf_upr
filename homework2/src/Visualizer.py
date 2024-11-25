@@ -3,6 +3,8 @@ import subprocess
 import sys
 from collections import defaultdict
 import os
+import requests
+import gzip
 
 class DependencyVisualizer:
     def __init__(self, config_path):
@@ -17,34 +19,36 @@ class DependencyVisualizer:
         with open(path, 'r') as f:
             return yaml.safe_load(f)
 
-    #функция получения зависимости пакетв
-    def get_package_dependencies(self, package):
-        try:
-            #выполняем команду "apt-cache depends _packagename_"
-            result = subprocess.run(
-                ["apt-cache", "depends", package],
-                text=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True
-            )
-            dependencies = []
-            #проходим по каждой строчке
-            for line in result.stdout.splitlines():
-                line = line.strip()
-                if line.startswith("Depends:"):
-                    #убираем лишние символы
-                    dep = line.split("Depends:")[1].strip()
-                    dep = dep.strip('<>')  #удаляем символы < и >
-                    dependencies.append(dep)
-            return dependencies
+    #функция загрузки списка пакетов и зависимостей из репозитория
+    def load_repository_metadata(self):
+           response = requests.get(self.repo_url, stream=True)
+           if response.status_code != 200:
+               print(f"error fetching package list from {self.repo_url}", file=sys.stderr)
+               sys.exit(1)
 
-        except subprocess.CalledProcessError as e: #ошибка в случае недоступности пакетв
-            print(f"error fetching dependencies for {package}: {e}", file=sys.stderr)
-            return []
+            #распаковка gzip и парсинг файла
+           package_data = {}
+           f = gzip.open(response.raw, encoding="utf-8", mode="rt")
+           #проходим по каждой строке
+           for line in f:
+               line = line.strip()
+               if line.startswith("Package:"):
+                   #рассмотрение текущего пакета
+                   current_package = line.split(":", 1)[1].strip()
+               elif line.startswith("Depends:") and current_package:
+                   #зависимости текущего пакета
+                   depends_raw = line.split(":", 1)[1].strip()
+                   dependencies = [
+                       dep.split("|")[0].strip().split()[0].strip()  #убираем альтернативные зависимости
+                       for dep in depends_raw.split(",")
+                   ]
+                   package_data[current_package] = dependencies
+           return package_data
+
 
     #функция получения всех зависимостей необходимого пакетв
     def build_dependency_graph(self):
+        metadata = self.load_repository_metadata()
         visited = set()
         queue = [self.package] #очередь на определение зависимостей пакетов
 
@@ -55,14 +59,13 @@ class DependencyVisualizer:
                 continue
             visited.add(current)
 
-            #определяем зависимости для этого пакетв
-            dependencies = self.get_package_dependencies(current)
-            self.dependencies[current] = dependencies
-
-            #добавляем все зависимые пакеты в очередь
-            for dep in dependencies:
-                if dep not in visited:
-                    queue.append(dep)
+            if current in metadata:
+                dependencies = metadata[current]
+                self.dependencies[current] = dependencies
+                #добавляем все зависимые пакеты в очередь
+                for dep in dependencies:
+                    if dep not in visited:
+                        queue.append(dep)
 
     #функция преобразования списка зависимостей в синтаксис диаграммы mermaid
     def generate_mermaid_diagram(self):
@@ -85,11 +88,11 @@ class DependencyVisualizer:
         #вызов инструмента mmdc для генерации изображения
         try:
             subprocess.run(
-                [self.visualizer_path, "-i", temp_file, "-o", output_path, "--puppeteerConfigFile", "config/pconfig.json"],
+                [self.visualizer_path, "-i", temp_file, "-o", output_path],
                 check=True
             )
             print(f"graph generated at {output_path}")
-            os.system(f'xdg-open "{output_path}"')
+            os.startfile(output_path)
         finally:
             os.remove(temp_file)  #удаление временного файла
 
