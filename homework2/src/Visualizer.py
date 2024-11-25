@@ -20,7 +20,7 @@ class DependencyVisualizer:
             return yaml.safe_load(f)
 
     #функция загрузки списка пакетов и зависимостей из репозитория
-    def load_repository_metadata(self):
+    def load_data(self):
            response = requests.get(self.repo_url, stream=True)
            if response.status_code != 200:
                print(f"error fetching package list from {self.repo_url}", file=sys.stderr)
@@ -48,7 +48,7 @@ class DependencyVisualizer:
 
     #функция получения всех зависимостей необходимого пакетв
     def build_dependency_graph(self):
-        metadata = self.load_repository_metadata()
+        metadata = self.load_data()
         visited = set()
         queue = [self.package] #очередь на определение зависимостей пакетов
 

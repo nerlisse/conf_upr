@@ -59,7 +59,7 @@ class TestVisualizer(unittest.TestCase):
 
         #создаем объект визуализатора
         visualizer = DependencyVisualizer("test_config.yaml")
-        metadata = visualizer.load_repository_metadata()
+        metadata = visualizer.load_data()
 
         #ожидаемое значение метаданных
         expected_metadata = {
