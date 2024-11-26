@@ -79,7 +79,7 @@ class DependencyVisualizer:
     #функция генерации изображения
     def visualize(self, output_path="graph.png"):
         mermaid_content = self.generate_mermaid_diagram()
-        #print(mermaid_content)
+        print(mermaid_content)
         #записываем во временный файл содержимое диаграммы
         temp_file = "temp.mmd"
         with open(temp_file, "w") as f:

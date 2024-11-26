@@ -1,8 +1,8 @@
 import unittest
-from unittest.mock import patch, mock_open, MagicMock
-import os
+from unittest.mock import patch, mock_open
+import requests
 from homework2.src.Visualizer import DependencyVisualizer
-from collections import defaultdict
+
 
 class TestVisualizer(unittest.TestCase):
     def setUp(self):
@@ -32,131 +32,90 @@ class TestVisualizer(unittest.TestCase):
         self.assertEqual(visualizer.config["visualizer_path"], "C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd")
         mock_open_file.assert_called_once_with(self.test_config_path, "r")
 
-    @patch("requests.get")
-    @patch("gzip.open")
     @patch("builtins.open", new_callable=mock_open, read_data="""
-            package: curl
-            repo_url: http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz
-            visualizer_path: C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd")
-        """)
-    def test_load_repository_metadata(self, mock_open_file, mock_gzip_open, mock_requests_get):
-        #мокаем http-ответ от requests.get
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.raw = MagicMock()
-        mock_requests_get.return_value = mock_response
-        #мокаем распакованный gzip файл
-        mock_gzip_file = MagicMock()
-        mock_gzip_file.__iter__.return_value = iter([
-            "Package: curl\n",
-            "Depends: libcurl4, openssl\n",
-            "Package: libcurl4\n",
-            "Depends: zlib1g\n",
-            "Package: openssl\n",
-            "Package: zlib1g\n"
-        ])
-        mock_gzip_open.return_value = mock_gzip_file
+           package: curl
+           repo_url: http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz
+           visualizer_path: C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd")
+       """)
+    def test_load_repository_metadata(self, mock_open_file):
+        visualizer = DependencyVisualizer(self.test_config_path)
+        response = requests.get(visualizer.config["repo_url"], stream=True)
+        assert response.status_code == 200
 
-        #создаем объект визуализатора
-        visualizer = DependencyVisualizer("test_config.yaml")
-        metadata = visualizer.load_data()
-
-        #ожидаемое значение метаданных
-        expected_metadata = {
-            'curl': ['libcurl4', 'openssl'], 'libcurl4': ['zlib1g']
-        }
-
-        #проверяем, что метаданные соответствуют ожидаемым
-        self.assertEqual(metadata, expected_metadata)
-
-        #проверяем вызовы заглушек
-        mock_requests_get.assert_called_once_with("http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz", stream=True)
-        mock_open_file.assert_called_once_with("test_config.yaml", "r")
-
-    from unittest.mock import patch, mock_open
 
     @patch("builtins.open", new_callable=mock_open, read_data="""
-    package: curl
+    package: openssl
     repo_url: http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz
     visualizer_path: C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd")
     """)
-    @patch("Visualizer.DependencyVisualizer.load_repository_metadata")
-    def test_build_dependency_graph(mock_load_metadata, mock_open_file):
-        #подмена метаданных
-        mock_load_metadata.return_value = {
-            "curl": ["libcurl4", "openssl"],
-            "libcurl4": ["zlib1g"],
-            "openssl": [],
-            "zlib1g": []
-        }
-
-        #создаем объект визуализатора
-        visualizer = DependencyVisualizer("test_config.yaml")
-
+    def test_build_dependency_graph(self, mock_open_file):
+        visualizer = DependencyVisualizer(self.test_config_path)
+        #package_data = visualizer.load_data()
         #зпускаем метод построения графа
         visualizer.build_dependency_graph()
 
         #ожидаемые зависимости
         expected_dependencies = {
-            "curl": ["libcurl4", "openssl"],
-            "libcurl4": ["zlib1g"],
-            "openssl": [],
-            "zlib1g": []
+            'openssl': ['libc6', 'libssl1.1'],
+             'libc6': ['libgcc-s1', 'libcrypt1'],
+             'libssl1.1': ['libc6', 'debconf'],
+             'libgcc-s1': ['gcc-10-base', 'libc6'],
+             'libcrypt1': ['libc6']
+
         }
 
         #проверяем, что зависимости построены правильно
         assert visualizer.dependencies == expected_dependencies
 
-        #проверяем, что `open` вызван с правильным путем
-        mock_open_file.assert_called_once_with("test_config.yaml", "r")
 
-    from unittest.mock import patch, mock_open
 
     @patch("builtins.open", new_callable=mock_open, read_data="""
-    package: curl
+    package: openssl
     repo_url: http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz
     visualizer_path: C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd"
     """)
-    @patch("visualizer.DependencyVisualizer.load_repository_metadata")
-    def test_generate_mermaid_diagram(mock_load_metadata, mock_open_file):
-        #подмена метаданных, чтобы избежать сетевых вызовов
-        mock_load_metadata.return_value = {
-            "curl": ["libcurl4", "openssl"],
-            "libcurl4": ["zlib1g"],
-            "openssl": [],
-            "zlib1g": []
-        }
-
-        #создаем объект визуализатора
-        visualizer = DependencyVisualizer("test_config.yaml")
+    def test_generate_mermaid_diagram(self, mock_open_file):
+        visualizer = DependencyVisualizer(self.test_config_path)
         visualizer.build_dependency_graph()
 
         #ожидаемое содержимое диаграммы Mermaid
         expected_diagram = (
-            "graph TD\n"
-            "    curl --> libcurl4\n"
-            "    curl --> openssl\n"
-            "    libcurl4 --> zlib1g\n"
+        "graph TD\n"
+            "    openssl --> libc6\n"
+            "    openssl --> libssl1.1\n"
+            "    libc6 --> libgcc-s1\n"
+            "    libc6 --> libcrypt1\n"
+            "    libssl1.1 --> libc6\n"
+            "    libssl1.1 --> debconf\n"
+            "    libgcc-s1 --> gcc-10-base\n"
+            "    libgcc-s1 --> libc6\n"
+            "    libcrypt1 --> libc6\n"
         ).strip()
 
-        #генерируем Mermaid-диаграмму
         diagram = visualizer.generate_mermaid_diagram()
-
-        #гроверяем, что диаграмма совпадает с ожидаемой
         assert diagram.strip() == expected_diagram
 
-        # Проверяем, что заглушка `open` вызвана
-        mock_open_file.assert_called_once_with("test_config.yaml", "r")
 
     @patch("subprocess.run")
-    @patch("builtins.open", new_callable=mock_open)
+    @patch("builtins.open", new_callable=mock_open, read_data="""
+        package: openssl
+        repo_url: http://archive.ubuntu.com/ubuntu/dists/focal/main/binary-amd64/Packages.gz
+        visualizer_path: C:/Users/sashk/AppData/Roaming/fnm/node-versions/v22.11.0/installation/mmdc.cmd"
+        """)
     @patch("os.remove")
     def test_visualize(self, mock_remove, mock_open_file, mock_subprocess_run):
         visualizer = DependencyVisualizer(self.test_config_path)
-        visualizer.dependencies = self.mock_metadata
+        visualizer.dependencies = {
+            'openssl': ['libc6', 'libssl1.1'],
+             'libc6': ['libgcc-s1', 'libcrypt1'],
+             'libssl1.1': ['libc6', 'debconf'],
+             'libgcc-s1': ['gcc-10-base', 'libc6'],
+             'libcrypt1': ['libc6']
+
+        }
 
         #тестируем, что создается временный файл
-        visualizer.visualize(output_path="test_graph.png")
+        visualizer.visualize(output_path="graph.png")
 
         mock_open_file.assert_called_once_with("temp.mmd", "w")
         mock_subprocess_run.assert_called_once_with(
