@@ -184,3 +184,4 @@ python src/Visualizer.py
 
 
 ### Результат прогона тестов
+![image.png](https://github.com/user-attachments/assets/aa2dfb11-d449-436a-9610-d1e9a678ca71)
