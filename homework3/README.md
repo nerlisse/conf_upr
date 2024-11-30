@@ -238,3 +238,4 @@ python src/ConfigParser.py
 
 ### Результат прогона тестов
 
+![image.png](https://github.com/user-attachments/assets/d8b6e3eb-1e0c-4e0e-95de-6da3baab699c)
