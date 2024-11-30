@@ -1,5 +1,4 @@
 import sys
-
 import regex as re
 import yaml
 
@@ -136,10 +135,16 @@ class ConfigParser:
         return yaml.dump(yaml_data, default_flow_style=False)  # возвращаем в формате yaml
 
 
-# Пример использования
+# пример использования
 if __name__ == "__main__":
-    print("введите входной текст, ctrl+d для завершения ввода")
-    input_text = sys.stdin.read()
+    input_text = ""
+    while True:
+        # получаем строку из потока стандартного ввода
+        line = input()
+        #print(line)
+        if not line:
+            break
+        input_text += line
     parser = ConfigParser()
     try:
         result = parser.process_config(input_text)
