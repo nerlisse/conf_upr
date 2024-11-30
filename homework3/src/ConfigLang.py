@@ -7,7 +7,8 @@ class ConfigParser:
     # регулярные выражения, необходимые для работы
     PATTERN_TABLE = r'table\((?:[^()]*|(?R))*\)'
     PATTERN_ARRAY = r'<<\s*(?:[^<>]|table\((?:[^()]*|(?R))*\)|(?R))*\s*>>'
-    PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.*?)\)'
+    #PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.*?)\)'
+    PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(table\((?:[^()]*|(?R))*\)|<<(?:[^<>]|(?R))*>>|\d+)\)'
     PATTERN_CONST = r'#\[([a-zA-Z][_a-zA-Z0-9]*)\]'
 
     def __init__(self):
