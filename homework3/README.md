@@ -233,7 +233,7 @@ pip install -r requirements.txt
 Запустить программу командой:
 
 ```bash
-python src/ConfigLang.py
+python src/ConfigParser.py
 ```
 
 ### Результат прогона тестов

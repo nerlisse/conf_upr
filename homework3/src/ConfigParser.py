@@ -8,7 +8,8 @@ class ConfigParser:
     PATTERN_TABLE = r'table\((?:[^()]*|(?R))*\)'
     PATTERN_ARRAY = r'<<\s*(?:[^<>]|table\((?:[^()]*|(?R))*\)|(?R))*\s*>>'
     #PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.*?)\)'
-    PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(table\((?:[^()]*|(?R))*\)|<<(?:[^<>]|(?R))*>>|\d+)\)'
+    #PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(table\((?:[^()]*|(?R))*\)|<<(?:[^<>]|(?R))*>>|\d+)\)'
+    PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+((?:table\((?:[^()]*|(?R))*\)|<<\s*(?:[^<>]|(?R))*\s*>>|\d+|.*?))\s*\)'
     PATTERN_CONST = r'#\[([a-zA-Z][_a-zA-Z0-9]*)\]'
 
     def __init__(self):
@@ -122,7 +123,7 @@ class ConfigParser:
             name, value = match
             self.constants[name] = self.parse_value(value.strip())
             text = re.sub(re.escape(f"(def {name} {value})"), '', text, count=1)
-
+        #print(self.constants)
         yaml_data = []
         combined_pattern = f"{self.PATTERN_TABLE}|{self.PATTERN_ARRAY}"
         matches = re.findall(combined_pattern, text, flags=re.DOTALL)  # находим массивы и словари
@@ -138,17 +139,29 @@ class ConfigParser:
 
 # пример использования
 if __name__ == "__main__":
-    input_text = ""
-    while True:
-        # получаем строку из потока стандартного ввода
-        line = input()
-        #print(line)
-        if not line:
-            break
-        input_text += line
+    # input_text = ""
+    # while True:
+    #     # получаем строку из потока стандартного ввода
+    #     line = input()
+    #     #print(line)
+    #     if not line:
+    #         break
+    #     input_text += line
     parser = ConfigParser()
     try:
-        result = parser.process_config(input_text)
+        text = """
+        (def myconst table(
+            eeeee => 3,
+        ))
+        table(
+            key1 => 123,
+            key2 => << 1, 2, table( 
+                nested => #[myconst],
+            ), 4, >>,
+        )
+        << table(key => 1), 3, 4, >>
+        """
+        result = parser.process_config(text)
         print(result)
     except ValueError as e:
         print(f"Syntax error: {e}")
