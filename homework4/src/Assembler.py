@@ -4,7 +4,7 @@ import sys
 
 
 class Assembler:
-    # Определяем опкоды для команд УВМ
+    # определяем опкоды команд
     COMMANDS = {
         "LOAD_CONST": 26,
         "READ_FROM_MEMORY": 18,
@@ -20,10 +20,9 @@ class Assembler:
         self.binary_data = bytearray()
         self.log_data = []
 
-
+    # функция преобразования инструкции в массив байтов (4 байта)
     def instruction_to_bytes(self, instruction):
-        # преобразование инструкции в массив байтов (4 байта)
-        raw_bytes = struct.pack("<I", instruction)  # 4 байта, big-endian unsigned int
+        raw_bytes = struct.pack("<I", instruction)
         return [f"0x{b:02X}" for b in raw_bytes]
 
     def assemble(self):
@@ -38,16 +37,16 @@ class Assembler:
             if command not in self.COMMANDS:
                 raise SyntaxError(f"{line} incorrect command")
             A = self.COMMANDS[command]
-            B = int(parts[1], 10)  # Операнд B в десятичной системе
+            B = int(parts[1], 10)
 
-            # Формируем машинный код команды
+            # формируем машинный код команды
             instruction = (A & 0x1F)
             match A:
                 case 26:
                     if not (0 <= B < (1 << 13)):
                         raise ValueError("Константа B должна быть в пределах от 0 до 2^13-1")
                     instruction |= ((B & 0x1FFF) << 5)
-                case 18, 23:
+                case 18 | 23:
                     if not (0 <= B < (1 << 23)):
                         raise ValueError("Адрес B должен быть в пределах от 0 до 2^23-1")
                     instruction |= ((B & 0x7FFFFF) << 5)
@@ -59,10 +58,10 @@ class Assembler:
             # print(f"A: {A}  B: {B}")
             # print(instruction)
 
-            # Сохраняем бинарное представление
+            # сохраняем бинарное представление
             self.binary_data.extend(struct.pack("<I", instruction))
 
-            # Логируем данные
+            # логируем данные
             self.log_data.append({
                 "command": command,
                 "A": A,
@@ -73,13 +72,13 @@ class Assembler:
         self.save_binary(self.binary_data)
         self.save_log(self.log_data)
 
+    # функция сохранения бинарного файла
     def save_binary(self, binary_data):
-        # Сохраняем бинарный файл
         with open(self.output_file, "wb") as f:
             f.write(binary_data)
 
+    # функция сохранения лог-файла
     def save_log(self, log_data):
-        # Сохраняем лог-файл
         with open(self.log_file, "w") as f:
             yaml.dump(log_data, f, default_flow_style=False)
 
