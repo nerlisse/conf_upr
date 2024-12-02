@@ -1,0 +1,32 @@
+- A: 26
+  B: 282
+  bytes:
+  - '0x5A'
+  - '0x23'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 18
+  B: 898
+  bytes:
+  - '0x12'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 23
+  B: 457
+  bytes:
+  - '0x17'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 17
+  B: 319
+  bytes:
+  - '0xF1'
+  - '0x27'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
