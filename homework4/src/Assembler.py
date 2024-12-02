@@ -55,9 +55,6 @@ class Assembler:
                         raise ValueError("Смещение B должно быть в пределах от 0 до 2^11-1")
                     instruction |= ((B & 0x7FF) << 5)
 
-            # print(f"A: {A}  B: {B}")
-            # print(instruction)
-
             # сохраняем бинарное представление
             self.binary_data.extend(struct.pack("<I", instruction))
 
@@ -69,18 +66,18 @@ class Assembler:
                 "bytes": self.instruction_to_bytes(instruction)
             })
 
-        self.save_binary(self.binary_data)
-        self.save_log(self.log_data)
+        self.save_binary()
+        self.save_log()
 
     # функция сохранения бинарного файла
-    def save_binary(self, binary_data):
+    def save_binary(self):
         with open(self.output_file, "wb") as f:
-            f.write(binary_data)
+            f.write(self.binary_data)
 
     # функция сохранения лог-файла
-    def save_log(self, log_data):
+    def save_log(self):
         with open(self.log_file, "w") as f:
-            yaml.dump(log_data, f, default_flow_style=False)
+            yaml.dump(self.log_data, f, default_flow_style=False)
 
 
 if __name__ == "__main__":
