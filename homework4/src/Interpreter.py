@@ -14,7 +14,7 @@ class Interpreter:
         self.log_data = []
 
     def interpret(self):
-        with open(binary_file, "rb") as f:
+        with open(self.binary_file, "rb") as f:
             data = f.read()
 
         while self.program_counter < len(data):
