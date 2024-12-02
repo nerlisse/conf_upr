@@ -6,27 +6,19 @@
   - '0x00'
   - '0x00'
   command: LOAD_CONST
-- A: 18
-  B: 898
-  bytes:
-  - '0x52'
-  - '0x70'
-  - '0x00'
-  - '0x00'
-  command: READ_FROM_MEMORY
 - A: 23
-  B: 457
+  B: 3
   bytes:
-  - '0x37'
-  - '0x39'
+  - '0x77'
+  - '0x00'
   - '0x00'
   - '0x00'
   command: WRITE_TO_MEMORY
-- A: 17
-  B: 319
+- A: 18
+  B: 3
   bytes:
-  - '0xF1'
-  - '0x27'
+  - '0x72'
   - '0x00'
   - '0x00'
-  command: NOT_EQUAL
+  - '0x00'
+  command: READ_FROM_MEMORY
