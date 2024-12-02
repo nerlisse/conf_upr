@@ -68,7 +68,7 @@ class Interpreter:
     # функция сохранения результата
     def save_result(self):
         result = {"log": self.log_data, "memory": self.memory}
-        with open(result_file, "w") as f:
+        with open(self.result_file, "w") as f:
             yaml.dump(result, f, default_flow_style=False)
 
     # функция преобразования инструкции в массив байтов (4 байта)
