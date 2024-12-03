@@ -30,6 +30,8 @@ class Assembler:
             lines = f.readlines()
 
         for line in lines:
+            if not line.strip():
+                continue
             parts = line.strip().split()
             if len(parts) != 2:
                 raise SyntaxError(f"{line}\noperation must have 2 arguments")

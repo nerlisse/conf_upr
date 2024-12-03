@@ -1,9 +1,9 @@
 log:
 - A: 26
-  B: 282
+  B: 154
   instruction:
   - '0x5A'
-  - '0x23'
+  - '0x13'
   - '0x00'
   - '0x00'
   memory_snapshot:
@@ -18,7 +18,242 @@ log:
   - 0
   - 0
   stack_snapshot:
-  - 282
+  - 154
+- A: 23
+  B: 1023
+  instruction:
+  - '0xF7'
+  - '0x7F'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 150
+  instruction:
+  - '0xDA'
+  - '0x12'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 150
+- A: 23
+  B: 1
+  instruction:
+  - '0x37'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 150
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 1
+  instruction:
+  - '0x32'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 150
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 150
+- A: 17
+  B: 873
+  instruction:
+  - '0x31'
+  - '0x6D'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 150
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 1
+  instruction:
+  - '0x37'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 151
+  instruction:
+  - '0xFA'
+  - '0x12'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 151
+- A: 23
+  B: 2
+  instruction:
+  - '0x57'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 151
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 2
+  instruction:
+  - '0x52'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 151
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 151
+- A: 17
+  B: 872
+  instruction:
+  - '0x11'
+  - '0x6D'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 151
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 2
+  instruction:
+  - '0x57'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 152
+  instruction:
+  - '0x1A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 152
 - A: 23
   B: 3
   instruction:
@@ -28,9 +263,9 @@ log:
   - '0x00'
   memory_snapshot:
   - 0
-  - 0
-  - 0
-  - 282
+  - 1
+  - 1
+  - 152
   - 0
   - 0
   - 0
@@ -47,9 +282,9 @@ log:
   - '0x00'
   memory_snapshot:
   - 0
-  - 0
-  - 0
-  - 282
+  - 1
+  - 1
+  - 152
   - 0
   - 0
   - 0
@@ -57,12 +292,547 @@ log:
   - 0
   - 0
   stack_snapshot:
-  - 282
+  - 152
+- A: 17
+  B: 871
+  instruction:
+  - '0xF1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 152
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 3
+  instruction:
+  - '0x77'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 153
+  instruction:
+  - '0x3A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 153
+- A: 23
+  B: 4
+  instruction:
+  - '0x97'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 153
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 4
+  instruction:
+  - '0x92'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 153
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 153
+- A: 17
+  B: 870
+  instruction:
+  - '0xD1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 153
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 4
+  instruction:
+  - '0x97'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 154
+  instruction:
+  - '0x5A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 154
+- A: 23
+  B: 5
+  instruction:
+  - '0xB7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 154
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 5
+  instruction:
+  - '0xB2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 154
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 154
+- A: 17
+  B: 869
+  instruction:
+  - '0xB1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 154
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 0
+- A: 23
+  B: 5
+  instruction:
+  - '0xB7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 155
+  instruction:
+  - '0x7A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 155
+- A: 23
+  B: 6
+  instruction:
+  - '0xD7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 155
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 6
+  instruction:
+  - '0xD2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 155
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 155
+- A: 17
+  B: 868
+  instruction:
+  - '0x91'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 155
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 6
+  instruction:
+  - '0xD7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 156
+  instruction:
+  - '0x9A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  stack_snapshot:
+  - 156
+- A: 23
+  B: 7
+  instruction:
+  - '0xF7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 156
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 7
+  instruction:
+  - '0xF2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 156
+  - 0
+  - 0
+  stack_snapshot:
+  - 156
+- A: 17
+  B: 867
+  instruction:
+  - '0x71'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 156
+  - 0
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 7
+  instruction:
+  - '0xF7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 0
+  - 0
+  stack_snapshot: []
+- A: 26
+  B: 10
+  instruction:
+  - '0x5A'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 0
+  - 0
+  stack_snapshot:
+  - 10
+- A: 23
+  B: 8
+  instruction:
+  - '0x17'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 10
+  - 0
+  stack_snapshot: []
+- A: 18
+  B: 8
+  instruction:
+  - '0x12'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 10
+  - 0
+  stack_snapshot:
+  - 10
+- A: 17
+  B: 1013
+  instruction:
+  - '0xB1'
+  - '0x7E'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 10
+  - 0
+  stack_snapshot:
+  - 1
+- A: 23
+  B: 8
+  instruction:
+  - '0x17'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  memory_snapshot:
+  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 1
+  - 0
+  stack_snapshot: []
 memory:
 - 0
+- 1
+- 1
+- 1
+- 1
 - 0
+- 1
+- 1
+- 1
 - 0
-- 282
 - 0
 - 0
 - 0
@@ -1076,10 +1846,4 @@ memory:
 - 0
 - 0
 - 0
-- 0
-- 0
-- 0
-- 0
-- 0
-- 0
-- 0
+- 154

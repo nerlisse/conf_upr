@@ -1,8 +1,104 @@
 - A: 26
-  B: 282
+  B: 154
   bytes:
   - '0x5A'
-  - '0x23'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 1023
+  bytes:
+  - '0xF7'
+  - '0x7F'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 150
+  bytes:
+  - '0xDA'
+  - '0x12'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 1
+  bytes:
+  - '0x37'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 1
+  bytes:
+  - '0x32'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 873
+  bytes:
+  - '0x31'
+  - '0x6D'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 1
+  bytes:
+  - '0x37'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 151
+  bytes:
+  - '0xFA'
+  - '0x12'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 2
+  bytes:
+  - '0x57'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 2
+  bytes:
+  - '0x52'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 872
+  bytes:
+  - '0x11'
+  - '0x6D'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 2
+  bytes:
+  - '0x57'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 152
+  bytes:
+  - '0x1A'
+  - '0x13'
   - '0x00'
   - '0x00'
   command: LOAD_CONST
@@ -22,3 +118,219 @@
   - '0x00'
   - '0x00'
   command: READ_FROM_MEMORY
+- A: 17
+  B: 871
+  bytes:
+  - '0xF1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 3
+  bytes:
+  - '0x77'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 153
+  bytes:
+  - '0x3A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 4
+  bytes:
+  - '0x97'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 4
+  bytes:
+  - '0x92'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 870
+  bytes:
+  - '0xD1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 4
+  bytes:
+  - '0x97'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 154
+  bytes:
+  - '0x5A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 5
+  bytes:
+  - '0xB7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 5
+  bytes:
+  - '0xB2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 869
+  bytes:
+  - '0xB1'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 5
+  bytes:
+  - '0xB7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 155
+  bytes:
+  - '0x7A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 6
+  bytes:
+  - '0xD7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 6
+  bytes:
+  - '0xD2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 868
+  bytes:
+  - '0x91'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 6
+  bytes:
+  - '0xD7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 156
+  bytes:
+  - '0x9A'
+  - '0x13'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 7
+  bytes:
+  - '0xF7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 7
+  bytes:
+  - '0xF2'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 867
+  bytes:
+  - '0x71'
+  - '0x6C'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 7
+  bytes:
+  - '0xF7'
+  - '0x00'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 26
+  B: 10
+  bytes:
+  - '0x5A'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  command: LOAD_CONST
+- A: 23
+  B: 8
+  bytes:
+  - '0x17'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
+- A: 18
+  B: 8
+  bytes:
+  - '0x12'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  command: READ_FROM_MEMORY
+- A: 17
+  B: 1013
+  bytes:
+  - '0xB1'
+  - '0x7E'
+  - '0x00'
+  - '0x00'
+  command: NOT_EQUAL
+- A: 23
+  B: 8
+  bytes:
+  - '0x17'
+  - '0x01'
+  - '0x00'
+  - '0x00'
+  command: WRITE_TO_MEMORY
