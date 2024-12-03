@@ -20,6 +20,7 @@ class TestAssembler(unittest.TestCase):
         os.remove("test_log.yaml")
         os.remove("test_output.bin")
 
+
     def test_read_from_memory(self):
         with open("test_input.asm", "w") as f:
             f.write("READ_FROM_MEMORY 2000\n")
