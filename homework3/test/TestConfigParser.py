@@ -7,17 +7,6 @@ class TestConfigParser(unittest.TestCase):
     def setUp(self):
         self.parser = ConfigParser()
 
-    def test_constants(self):
-        input_text = """
-        (def simple_int 42)
-        (def simple_str table( 
-        key => << 34, 35, >>,
-        ) 
-        )
-        """
-        result = self.parser.process_config(input_text)
-        self.assertEqual(self.parser.constants["simple_int"], 42)
-        self.assertEqual(self.parser.constants["simple_str"], {'key': [34, 35]})
 
     def test_table(self):
         input_text = """

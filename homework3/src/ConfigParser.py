@@ -131,8 +131,15 @@ class ConfigParser:
         for match in matches:  # обрабатываем каждый
             if match.startswith('table('):
                 yaml_data.append(self.parse_table(match[6:-1]))
+                text = text.replace(match, "")
             elif match.startswith('<<'):
                 yaml_data.append(self.parse_array(match[2:-2]))
+                text = text.replace(match, "")
+            else:
+                raise SyntaxError("Incorrect syntax")
+
+        if len(re.findall(r"\S+", text)) > 0:
+            raise SyntaxError("Incorrect syntax")
 
         return yaml.dump(yaml_data, default_flow_style=False)  # возвращаем в формате yaml
 
@@ -151,5 +158,5 @@ if __name__ == "__main__":
     try:
         result = parser.process_config(input_text)
         print(result)
-    except ValueError as e:
+    except Exception as e:
         print(f"Syntax error: {e}")
