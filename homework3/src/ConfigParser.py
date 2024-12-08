@@ -7,9 +7,20 @@ class ConfigParser:
     # регулярные выражения, необходимые для работы
     PATTERN_TABLE = r'table\((?:[^()]*|(?R))*\)'
     PATTERN_ARRAY = r'<<\s*(?:[^<>]|table\((?:[^()]*|(?R))*\)|(?R))*\s*>>'
-    #PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.*?)\)'
-    #PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(table\((?:[^()]*|(?R))*\)|<<(?:[^<>]|(?R))*>>|\d+)\)'
     PATTERN_DEF = r'\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+((?:table\((?:[^()]*|(?R))*\)|<<\s*(?:[^<>]|(?R))*\s*>>|\d+|.*?))\s*\)'
+    #PATTERN_DEF = r"\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.+?)\s*\)"
+    #PATTERN_DEF = r"\(def\s+([a-zA-Z][_a-zA-Z0-9]*)\s+(.+?)\s*\)"
+    # PATTERN_DEF = r"""
+    # \(def\s+                     # Начало объявления: "(def " и пробелы
+    # ([a-zA-Z][_a-zA-Z0-9]*)\s+   # Имя константы (например, myconst)
+    # (                            # Начало захвата значения
+    #     table\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)  # Разбор table(...)
+    #     |                        # Или
+    #     <<(?:[^<>]*|<(?:[^<>]*|<[^<>]*>)*>)*>>         # Разбор <<...>>
+    #     |\d+                     # Или число
+    # )\s*\)                       # Закрывающая скобка и возможные пробелы
+    # """
+
     PATTERN_CONST = r'#\[([a-zA-Z][_a-zA-Z0-9]*)\]'
 
     def __init__(self):
@@ -118,42 +129,137 @@ class ConfigParser:
 
     # обработка входных данных
     def process_config(self, text):
-        # обработка констант
-        for match in re.findall(self.PATTERN_DEF, text):
-            name, value = match
-            self.constants[name] = self.parse_value(value.strip())
-            text = re.sub(re.escape(f"(def {name} {value})"), '', text, count=1)
-        #print(self.constants)
+
         yaml_data = []
-        combined_pattern = f"{self.PATTERN_TABLE}|{self.PATTERN_ARRAY}"
-        matches = re.findall(combined_pattern, text, flags=re.DOTALL)  # находим массивы и словари
+        text = text.replace("\n", "").strip()
 
-        for match in matches:  # обрабатываем каждый
-            if match.startswith('table('):
-                yaml_data.append(self.parse_table(match[6:-1]))
-                text = text.replace(match, "")
-            elif match.startswith('<<'):
-                yaml_data.append(self.parse_array(match[2:-2]))
-                text = text.replace(match, "")
+        # stack = []
+        # current_def = None
+        # current_value = []
+        # i = 0
+        #
+        # while i < len(text):
+        #     if text[i:i + 5] == '(def ':
+        #         if current_def:
+        #             raise SyntaxError("Nested definitions are not allowed")
+        #         i += 5
+        #         name_start = i
+        #         while text[i] != ' ':
+        #             i += 1
+        #         name = text[name_start:i]
+        #         current_def = name
+        #         i += 1
+        #     elif text[i] == '(':
+        #         if current_def:
+        #             stack.append('(')
+        #             current_value.append(text[i])
+        #         i += 1
+        #     elif text[i] == ')':
+        #         if stack and stack[-1] == '(':
+        #             stack.pop()
+        #             current_value.append(text[i])
+        #             if not stack and current_def:
+        #                 self.constants[current_def] = self.parse_value(''.join(current_value).strip())
+        #                 current_def = None
+        #                 current_value = []
+        #         i += 1
+        #     elif text[i] == '<' and text[i:i + 2] == '<<':
+        #         if current_def:
+        #             stack.append('<<')
+        #             current_value.append('<<')
+        #         i += 2
+        #     elif text[i] == '>' and text[i:i + 2] == '>>':
+        #         if stack and stack[-1] == '<<':
+        #             stack.pop()
+        #             current_value.append('>>')
+        #             if not stack and current_def:
+        #                 self.constants[current_def] = self.parse_value(''.join(current_value).strip())
+        #                 current_def = None
+        #                 current_value = []
+        #         i += 2
+        #     else:
+        #         if current_def:
+        #             current_value.append(text[i])
+        #         i += 1
+        #
+        # if stack:
+        #     raise SyntaxError("Unbalanced brackets")
+
+        # i have to do something
+        # Повторяем до тех пор, пока находятся совпадения
+        # while True:
+        #     match = re.search(self.PATTERN_DEF, text, re.VERBOSE)  # Ищем определение (def ...)
+        #     if not match:
+        #         break  # Если не нашли, выходим из цикла
+        #
+        #     name, value = match.groups()  # Извлекаем имя и значение константы
+        #     self.constants[name] = self.parse_value(value.strip())  # Парсим и сохраняем в словарь
+        #
+        #     # Удаляем найденное определение из текста
+        #     text = text[:match.start()] + text[match.end():]
+
+        current_def = None
+        current_value = ""
+        i = 0
+        depth = 0
+        start = 0
+
+        while i < len(text):
+            char = text[i]
+
+            if char == '(' and text[i:i + 5] == '(def ':
+                if current_def:
+                    raise SyntaxError("Invalid syntax")
+                i += 5
+                start = i
+                while text[i] != ' ':
+                    i += 1
+                current_def = text[start:i]
+            elif char == 't' and text[i:i + 6] == 'table(':
+                depth += 1
+                current_value += 'table('
+                i += 6
+            elif char == ')' and depth > 0:
+                depth -= 1
+                current_value += ')'
+            elif char == ')' and depth == 0:
+                # end const
+                self.constants[current_def] = self.parse_value(current_value.strip())
+                current_def = None
+                current_value = ""
+                i += 1
             else:
-                raise SyntaxError("Incorrect syntax")
+                current_value += char
+            i += 1
 
-        if len(re.findall(r"\S+", text)) > 0:
-            raise SyntaxError("Incorrect syntax")
+        if current_def:
+            self.constants[current_def] = current_value.strip()
 
-        return yaml.dump(yaml_data, default_flow_style=False)  # возвращаем в формате yaml
+        return yaml.dump(self.constants, default_flow_style=False)  # возвращаем в формате yaml
+
+
 
 
 # пример использования
 if __name__ == "__main__":
-    input_text = ""
-    while True:
-        # получаем строку из потока стандартного ввода
-        line = input()
-        #print(line)
-        if not line:
-            break
-        input_text += line
+    # input_text = ""
+    # while True:
+    #     # получаем строку из потока стандартного ввода
+    #     line = input()
+    #     #print(line)
+    #     if not line:
+    #         break
+    #     input_text += line
+    input_text = """
+            (def const1 4)
+            (def const2 table(
+                leeknow => 2511,
+                han => 914,
+                skz => << 8, 1, >>,
+            ) )
+            (def const3 << table( key => 1, ), #[const1], 3, >> )
+            """
+
     parser = ConfigParser()
     try:
         result = parser.process_config(input_text)
