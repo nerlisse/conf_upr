@@ -190,23 +190,51 @@ homework3/
 
 ```Python
     def process_config(self, text):
-        # обработка констант
-        for match in re.findall(self.PATTERN_DEF, text):
-            name, value = match
-            self.constants[name] = self.parse_value(value.strip())
-            text = re.sub(re.escape(f"(def {name} {value})"), '', text, count=1)
 
-        yaml_data = []
-        combined_pattern = f"{self.PATTERN_TABLE}|{self.PATTERN_ARRAY}"
-        matches = re.findall(combined_pattern, text, flags=re.DOTALL)  # находим массивы и словари
+        text = text.replace("\n", "").strip()
 
-        for match in matches:  # обрабатываем каждый
-            if match.startswith('table('):
-                yaml_data.append(self.parse_table(match[6:-1]))
-            elif match.startswith('<<'):
-                yaml_data.append(self.parse_array(match[2:-2]))
+        current_def = None
+        current_value = ""
+        i = 0
+        depth = 0
 
-        return yaml.dump(yaml_data, default_flow_style=False)  # возвращаем в формате yaml
+        while i < len(text): # идем посимвольно
+            char = text[i]
+
+            if char == '(' and text[i:i + 5] == '(def ':  # определение константы
+                # если определяется константа, когда другая не доопределена или присутствуют сторонние символы
+                if current_def or current_value.strip():
+                    raise SyntaxError("Invalid syntax")
+                i += 5
+                start = i
+                while text[i] != ' ':
+                    i += 1
+                current_def = text[start:i] # имя константы
+            elif char == 't' and text[i:i + 6] == 'table(':  # вложенный словарь
+                depth += 1
+                current_value += 'table('
+                i += 5
+            elif char == ')' and depth > 0:  # закончился вложенный словарь
+                depth -= 1
+                current_value += ')'
+            elif char == ')' and depth == 0 and not current_def:  # лишняя скобка
+                raise SyntaxError("Invalid syntax")
+            elif char == ')' and depth == 0:  # окончание значения константы
+                # end const
+                self.constants[current_def] = self.parse_value(current_value.strip())
+                current_def = None
+                current_value = ""
+
+            else:
+                current_value += char
+            i += 1
+
+        if current_def:  # если константа не доопределена
+            raise SyntaxError("Invalid syntax")
+
+        print(self.constants)
+
+        return yaml.dump(self.constants, Dumper=NoAliasDumper, default_flow_style=False, canonical=False)  # возвращаем в формате yaml
 ```
 
 * Описание: обрабатывает полученные исходные данные - преобразует константы и находит массивы и словари.
@@ -235,4 +263,4 @@ python src/ConfigParser.py
 
 ### Результат прогона тестов
 
-![image.png](https://github.com/user-attachments/assets/d8b6e3eb-1e0c-4e0e-95de-6da3baab699c)
+![image.png](https://github.com/user-attachments/assets/ba710d87-e785-4edb-8c56-b647015fe735)
