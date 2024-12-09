@@ -161,8 +161,6 @@ class ConfigParser:
         if current_def:  # если константа не доопределена
             raise SyntaxError("Invalid syntax")
 
-        print(self.constants)
-
         return yaml.dump(self.constants, Dumper=NoAliasDumper, default_flow_style=False, canonical=False)  # возвращаем в формате yaml
 
 
