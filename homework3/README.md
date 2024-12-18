@@ -261,6 +261,12 @@ cd homework3
 python src/ConfigParser.py
 ```
 
+### Пример использования программы
+
+![image.png](https://github.com/user-attachments/assets/3baab943-4f2c-4ec2-8848-2d2b70052c1d)
+
+
+
 ### Результат прогона тестов
 
 ![image.png](https://github.com/user-attachments/assets/ba710d87-e785-4edb-8c56-b647015fe735)
